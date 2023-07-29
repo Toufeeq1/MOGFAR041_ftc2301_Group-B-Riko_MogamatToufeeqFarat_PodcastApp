@@ -2,7 +2,7 @@
 
 import { BrowserRouter , Route ,Routes, } from 'react-router-dom';
 import LoginPage from "./Components/Login";
-import Home from './Components/Home';
+import Home from './Components/home';
 import SignUpPage from './Components/SignUpPage';
 import React, { useEffect } from 'react';
 
