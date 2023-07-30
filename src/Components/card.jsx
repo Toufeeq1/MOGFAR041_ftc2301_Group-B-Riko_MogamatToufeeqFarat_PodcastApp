@@ -33,6 +33,7 @@ const CardSetUp = () => {
             .then(res => res.json()) // Convert the response to JSON format
             .then(data => setCards(data)) // Update the 'card' state with the fetched data
              console.log(cards) // Uncomment this line to log the 'card' state (not recommended in production)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -77,6 +78,14 @@ const CardSetUp = () => {
       </main>
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
       </Box>
+      <Typography
+          variant="subtitle1"
+          align="center"
+          color="text.secondary"
+          component="p"
+        >
+          <div> Icons made by <a href="" title="Reion"> Reion </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+        </Typography>
     </ThemeProvider>
   );
 }
