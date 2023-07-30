@@ -84,7 +84,7 @@ const CardSetUp = () => {
           color="text.secondary"
           component="p"
         >
-          <div> Icons made by <a href="" title="Reion"> Reion </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+          <div> Icon made by <a href="" title="Reion"> Reion </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         </Typography>
     </ThemeProvider>
   );

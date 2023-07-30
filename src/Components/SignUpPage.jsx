@@ -1,61 +1,4 @@
 
-// import { Avatar, Button, TextField,Typography, Box, Link} from '@mui/material';
-// // import { Auth } from '@supabase/auth-ui-react'
-// import {ThemeSupa,} from '@supabase/auth-ui-shared'
-// import { createClient } from '@supabase/supabase-js';
-
-// // const supabase = createClient(
-// //   process.env.React_Login_Superbase_Url,
-// //   process.env.React_Key
-// // )
-
-// // const App = () => (
-// //   <Auth
-// //     supabaseClient={supabase}
-    
-// //     appearance={{ theme: ThemeSupa }}
-// //   />
-// // )
-
-//  const LoginPage = () => {
-
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-//     const data = new FormData(event.currentTarget);
-//     console.log({
-//       email: data.get('email'),
-//       password: data.get('password'),
-//     });
-//   }
-
-//     return(
-//         <div>
-          
-//              {/* <Box sx={{
-//           marginTop: 8,
-//           display: 'flex',
-//           flexDirection: 'column',
-//           alignItems: 'center',
-//         }}>
-//         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-           
-//           </Avatar>
-//           <Typography component="h1" variant="h5">Sign in</Typography>
-//           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-//             <TextField margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" autoFocus />
-//             <TextField margin="normal" required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password" />
-//             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Sign In</Button>  
-            
-//                 <Link href="#" variant="body2">
-//                   {"Don't have an account? Sign Up"}
-//                 </Link>
-
-//             </Box>
-//             </Box> */}
-
-//         </div>
-//     )   
-// }
 import { Link } from "react-router-dom"
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -71,19 +14,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 import {supabase} from './client'
 
-
-// function Copyright(props) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
 
 const defaultTheme = createTheme();
 
@@ -107,11 +37,7 @@ const defaultTheme = createTheme();
     }
 
     )
-    // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
+  
   };
 
   const handleSubmit = async (event) =>{
@@ -189,7 +115,6 @@ const defaultTheme = createTheme();
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
   );
