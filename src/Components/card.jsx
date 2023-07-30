@@ -93,9 +93,12 @@ const CardSetUp = () => {
                         component="div"
                         sx={{
                           pt: '100%',
+                          display: 'block', // Initially set display to block
+                          visibility: 'hidden',
                         }}
                         image={card.image}
-                        onLoad={() => setIsLoading(false)} // Set imageLoading to false once the image has loaded
+                        onLoad={() => setIsLoading(false)} 
+                        style={{ visibility: 'visible' }} // Set imageLoading to false once the image has loaded
                       />
                       <CardContent sx={{ flexGrow: 1 }}>
                         <Typography gutterBottom variant="h5" component="h2">
@@ -135,4 +138,3 @@ const CardSetUp = () => {
 };
 
 export default CardSetUp;
-
