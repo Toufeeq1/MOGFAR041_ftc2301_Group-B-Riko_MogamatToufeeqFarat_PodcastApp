@@ -24,7 +24,7 @@ const NavBar = () => {
                         }
                     }
                 }
-                src="../public/sound.png"  
+                src="../sound.png"  
                 alt="nav-img" 
                 />
                 {/* <PhotoCamera /> */}
