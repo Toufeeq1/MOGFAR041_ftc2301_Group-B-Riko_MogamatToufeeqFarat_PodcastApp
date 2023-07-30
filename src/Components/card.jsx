@@ -87,14 +87,15 @@ const CardSetUp = () => {
               <Grid container spacing={4}>
                 {cards.map((card) => (
                   <Grid item key={card.id} xs={12} sm={6} md={4}>
-                    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                     <link key={card.id} rel="preload" as="image" href={card.image} />
+                    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                    
                       <CardMedia
                         component="div"
                         sx={{
                           pt: '100%',
                           display: 'block', // Initially set display to block
-                          visibility: 'hidden',
+                          //visibility: 'hidden',
                           
                         }}
                         image={card.image}
