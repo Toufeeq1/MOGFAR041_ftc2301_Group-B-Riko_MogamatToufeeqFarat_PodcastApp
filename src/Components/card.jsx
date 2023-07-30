@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Dialogs from './dialog';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { CircularProgress } from '@mui/material';
 
 const defaultTheme = createTheme();
 
@@ -72,6 +73,7 @@ const CardSetUp = () => {
               height: '100vh',
             }}
           >
+            <CircularProgress  sx={{height:'150vh'}} color='secondary' />
             <Typography variant="h5" color="text.primary">
               Loading...
             </Typography>
@@ -80,9 +82,6 @@ const CardSetUp = () => {
           // Render the actual content once data is loaded
           <>
             {/* Hero unit */}
-            <Box sx={{ bgcolor: 'background.paper', pt: 8, pb: 6 }}>
-             
-            </Box>
             <Container sx={{ py: 8 }} maxWidth="md">
               {/* End hero unit */}
               <Grid container spacing={4}>
@@ -95,9 +94,10 @@ const CardSetUp = () => {
                           pt: '100%',
                           display: 'block', // Initially set display to block
                           visibility: 'hidden',
+                          
                         }}
                         image={card.image}
-                        onLoad={() => setIsLoading(false)} 
+                       onLoad={() => setIsLoading(true)} 
                         style={{ visibility: 'visible' }} // Set imageLoading to false once the image has loaded
                       />
                       <CardContent sx={{ flexGrow: 1 }}>
