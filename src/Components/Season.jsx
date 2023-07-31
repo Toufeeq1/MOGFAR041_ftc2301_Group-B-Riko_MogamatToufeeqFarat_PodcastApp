@@ -12,7 +12,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
-import './index.css'
 
 const EpisodeDetails = ({ episode }) => {
     const [volume, setVolume] = useState(30);
