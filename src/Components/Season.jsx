@@ -24,7 +24,8 @@ const EpisodeDetails = ({ episode }) => {
 
   return (
     <span style={{ display: 'flex', gap: '10px', flexDirection: 'column', border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
-      <span style={{ fontSize: '4vh' }}><LikeButton  />{episode.title}</span>
+     <LikeButton/>
+      <span style={{ fontSize: '4vh' }}>{episode.title}</span>
       <span className='description'>{episode.description}</span>
       <span>
         <audio controls>

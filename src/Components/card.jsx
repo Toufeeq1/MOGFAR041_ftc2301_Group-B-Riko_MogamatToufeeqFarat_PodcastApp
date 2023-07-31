@@ -131,9 +131,10 @@ const CardSetUp = () => {
       </main>
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer"></Box>
       <Typography variant="subtitle1" align="center" color="text.secondary" component="p">
-        <div>
-          Icon made by <a href=""> Reion </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-        </div>
+      
+  Icon made by <a href=""> Reion </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+
+
       </Typography>
     </ThemeProvider>
   );
