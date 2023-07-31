@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -12,6 +13,8 @@ import Dialogs from './dialog';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CircularProgress } from '@mui/material';
 import GroupSizesColors from './tributton'; // Make sure to import the correct component name
+import ImageCarousel from './Imagecarousel';
+
 
 const defaultTheme = createTheme();
 
@@ -75,8 +78,18 @@ const CardSetUp = () => {
     }
 
     return sorted;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cards, sortingOption]);
+
+ 
+
+  const carouselSlides = sortedCards.map((card) => ({
+    id: card.id,
+    title: card.title,
+    image: card.image,
+  }));
+
+  
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -99,10 +112,16 @@ const CardSetUp = () => {
           </Box>
         ) : (
           <>
-            
+             <Grid item xs={12} sm={6} md={4} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <ImageCarousel slides={carouselSlides} />
+                </Grid>
             <Container sx={{ py: 8 }} maxWidth="md">
             <GroupSizesColors onSortingOptionChange={setSortingOption} />
               <Grid container spacing={4}>
+                 {/* Add the ImageCarousel here */}
+                
+
+                {/* Render the rest of the cards */}
                 {sortedCards.map((card) => (
                   <Grid item key={card.id} xs={12} sm={6} md={4}>
                     <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -150,3 +169,4 @@ const CardSetUp = () => {
 };
 
 export default CardSetUp;
+
