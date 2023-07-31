@@ -8,7 +8,7 @@ import {
     DialogActions,
     Box    
   } from '@mui/material'
-  import BasicSelect from './buttonSeasons'
+  import BasicSelect from './ButtonSeasons'
   
   import { useState } from 'react'
   
