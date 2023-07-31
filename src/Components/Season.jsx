@@ -12,35 +12,43 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
+import './index.css';
 
+// EpisodeDetails component
 const EpisodeDetails = ({ episode }) => {
-    const [volume, setVolume] = useState(30);
-  
-    const handleChangeVolume = (event, newValue) => {
-      setVolume(newValue);
-    };
-  
-    return (
-      <span style={{  display: 'flex', gap: '10px', flexDirection: 'column' }}>
-        <span style={{ fontSize: '4vh' }} >{episode.title}</span>
-        <span className='description'>{episode.description}</span>
-        <span>
-          <audio controls>
-            <source src={episode.file} type="audio/mpeg" />
-          </audio>
-        </span>
-      </span>
-    );
-  };
-  
+  const [volume, setVolume] = useState(30);
 
+  const handleChangeVolume = (event, newValue) => {
+    setVolume(newValue);
+  };
+
+  return (
+    <span style={{ display: 'flex', gap: '10px', flexDirection: 'column', border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
+      <span style={{ fontSize: '4vh' }}>{episode.title}</span>
+      <span className='description'>{episode.description}</span>
+      <span>
+        <audio controls>
+          <source src={episode.file} type="audio/mpeg" />
+        </audio>
+      </span>
+    </span>
+  );
+};
+
+// BasicSelect component
 export default function BasicSelect({ idSeasons }) {
   const [selectedSeason, setSelectedSeason] = useState('');
   const [isDialogOpen, setDialogOpen] = useState(false);
+  const [selectedSeasonEpisodes, setSelectedSeasonEpisodes] = useState(0); // State variable to store the total number of episodes
 
   const handleChangeSeason = (event) => {
     const selectedSeasonValue = event.target.value;
     setSelectedSeason(selectedSeasonValue);
+
+    // Find the selected season and get the total number of episodes
+    const season = idSeasons.seasons.find((season) => season.season === selectedSeasonValue);
+    setSelectedSeasonEpisodes(season.episodes.length);
+
     setDialogOpen(true); // Open the dialog when a season is selected
   };
 
@@ -52,11 +60,7 @@ export default function BasicSelect({ idSeasons }) {
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Seasons</InputLabel>
-        <Select
-          value={selectedSeason}
-          label="Season"
-          onChange={handleChangeSeason}
-        >
+        <Select value={selectedSeason} label="Season" onChange={handleChangeSeason}>
           {idSeasons.seasons.map((season) => (
             <MenuItem key={season.season} value={season.season}>
               {season.season}: {season.title}
@@ -68,6 +72,10 @@ export default function BasicSelect({ idSeasons }) {
       <Dialog open={isDialogOpen} onClose={handleCloseDialog} fullScreen>
         <DialogTitle>Season Details</DialogTitle>
         <DialogContent>
+          <DialogContentText>
+            {/* Display the total number of episodes */}
+            Total Episodes in Season {selectedSeason}: {selectedSeasonEpisodes}
+          </DialogContentText>
           {selectedSeason && (
             <Box>
               <DialogContentText>
