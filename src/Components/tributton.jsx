@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 
 const GroupSizesColors = ({ onSortingOptionChange }) => {
   return (
-    <Grid container spacing={2} justifyContent="center" alignItems="center">
+    <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ paddingBottom: '5px' }}>
       <Grid item xs={12} sm={6} md={4}>
         <ButtonGroup
           fullWidth
@@ -28,7 +28,7 @@ const GroupSizesColors = ({ onSortingOptionChange }) => {
           aria-label="sorting button group"
         
         >
-          <Button onClick={() => onSortingOptionChange('Ascending')}> Ascending</Button>
+          <Button onClick={() => onSortingOptionChange('Ascending')}>Ascending</Button>
           <Button onClick={() => onSortingOptionChange('Descending')}> Descending</Button>
         </ButtonGroup>
       </Grid>
