@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 import Card from '@mui/material/Card';
@@ -14,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CircularProgress } from '@mui/material';
 import GroupSizesColors from './tributton'; // Make sure to import the correct component name
 import ImageCarousel from './Imagecarousel';
-
+import TextField from '@mui/material/TextField';
 
 const defaultTheme = createTheme();
 
@@ -80,6 +81,20 @@ const CardSetUp = () => {
     return sorted;
   }, [cards, sortingOption]);
 
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+  // Filter the cards based on the search query
+  const filteredCards = React.useMemo(() => {
+    return sortedCards.filter((card) =>
+      card.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [sortedCards, searchQuery]);
+  
+
+
  
 
   const carouselSlides = sortedCards.map((card) => ({
@@ -115,14 +130,27 @@ const CardSetUp = () => {
              <Grid item xs={12} sm={6} md={4} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <ImageCarousel slides={carouselSlides} />
                 </Grid>
+                <Grid item xs={12} md={6}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', maxWidth: 400, margin: '0 auto' }}>
+
+      <TextField
+        label="Search"
+        variant="outlined"
+        value={searchQuery}
+        onChange={handleSearch}
+        sx={{ display: 'flex', justifyContent: 'center' }}
+      />
+       </Box>
+    </Grid>
             <Container sx={{ py: 8 }} maxWidth="md">
+              
             <GroupSizesColors onSortingOptionChange={setSortingOption} />
               <Grid container spacing={4}>
                  {/* Add the ImageCarousel here */}
                 
 
                 {/* Render the rest of the cards */}
-                {sortedCards.map((card) => (
+                {filteredCards.map((card) => (
                   <Grid item key={card.id} xs={12} sm={6} md={4}>
                     <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                       <CardMedia
