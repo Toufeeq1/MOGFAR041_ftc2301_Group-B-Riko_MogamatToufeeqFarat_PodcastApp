@@ -1,14 +1,20 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 
-import Grid from '@mui/material/Grid';
+import Grid from "@mui/material/Grid";
 
 const GroupSizesColors = ({ onSortingOptionChange }) => {
   return (
-    <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ paddingBottom: '5px' }}>
+    <Grid
+      container
+      spacing={2}
+      justifyContent="center"
+      alignItems="center"
+      sx={{ paddingBottom: "5px" }}
+    >
       <Grid item xs={12} sm={6} md={4}>
         <ButtonGroup
           fullWidth
@@ -16,8 +22,18 @@ const GroupSizesColors = ({ onSortingOptionChange }) => {
           color="primary"
           aria-label="sorting button group"
         >
-          <Button style={{ color:'#A305BA'  }} onClick={() => onSortingOptionChange('A-Z')}>A-Z</Button>
-          <Button style={{ color:'#A305BA'  }} onClick={() => onSortingOptionChange('Z-A')}>Z-A</Button>
+          <Button
+            style={{ color: "#A305BA" }}
+            onClick={() => onSortingOptionChange("A-Z")}
+          >
+            A-Z
+          </Button>
+          <Button
+            style={{ color: "#A305BA" }}
+            onClick={() => onSortingOptionChange("Z-A")}
+          >
+            Z-A
+          </Button>
         </ButtonGroup>
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
@@ -26,10 +42,20 @@ const GroupSizesColors = ({ onSortingOptionChange }) => {
           size="large"
           color="primary"
           aria-label="sorting button group"
-        
         >
-          <Button style={{ color:'#A305BA'  }} onClick={() => onSortingOptionChange('Ascending')}>Ascending</Button>
-          <Button style={{ color:'#A305BA'  }} onClick={() => onSortingOptionChange('Descending')}> Descending</Button>
+          <Button
+            style={{ color: "#A305BA" }}
+            onClick={() => onSortingOptionChange("Ascending")}
+          >
+            Ascending
+          </Button>
+          <Button
+            style={{ color: "#A305BA" }}
+            onClick={() => onSortingOptionChange("Descending")}
+          >
+            {" "}
+            Descending
+          </Button>
         </ButtonGroup>
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
@@ -39,7 +65,12 @@ const GroupSizesColors = ({ onSortingOptionChange }) => {
           color="primary"
           aria-label="sorting button group"
         >
-          <Button style={{ color:'#A305BA'  }} onClick={() => onSortingOptionChange('Genre')}>Sort by Genre</Button>
+          <Button
+            style={{ color: "#A305BA" }}
+            onClick={() => onSortingOptionChange("Genre")}
+          >
+            Sort by Genre
+          </Button>
         </ButtonGroup>
       </Grid>
     </Grid>
@@ -47,6 +78,3 @@ const GroupSizesColors = ({ onSortingOptionChange }) => {
 };
 
 export default GroupSizesColors;
-
-
-

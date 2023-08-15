@@ -1,18 +1,18 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogActions from '@mui/material/DialogActions';
-import Button from '@mui/material/Button';
-import LikeButton from './likebutton';
+import React, { useState } from "react";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import LikeButton from "./likebutton";
 
 // EpisodeDetails component
 const EpisodeDetails = ({ episode }) => {
@@ -24,10 +24,19 @@ const EpisodeDetails = ({ episode }) => {
 
   return (
     // Component to display episode details
-    <span style={{ display: 'flex', gap: '10px', flexDirection: 'column', border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
+    <span
+      style={{
+        display: "flex",
+        gap: "10px",
+        flexDirection: "column",
+        border: "1px solid #ccc",
+        padding: "10px",
+        marginBottom: "10px",
+      }}
+    >
       <LikeButton />
-      <span style={{ fontSize: '4vh' }}>{episode.title}</span>
-      <span className='description'>{episode.description}</span>
+      <span style={{ fontSize: "4vh" }}>{episode.title}</span>
+      <span className="description">{episode.description}</span>
       <span>
         {/* Audio player for the episode */}
         <audio controls>
@@ -40,7 +49,7 @@ const EpisodeDetails = ({ episode }) => {
 
 // BasicSelect component
 export default function BasicSelect({ idSeasons }) {
-  const [selectedSeason, setSelectedSeason] = useState('');
+  const [selectedSeason, setSelectedSeason] = useState("");
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [selectedSeasonEpisodes, setSelectedSeasonEpisodes] = useState(0); // State variable to store the total number of episodes
 
@@ -50,7 +59,9 @@ export default function BasicSelect({ idSeasons }) {
     setSelectedSeason(selectedSeasonValue);
 
     // Find the selected season and get the total number of episodes
-    const season = idSeasons.seasons.find((season) => season.season === selectedSeasonValue);
+    const season = idSeasons.seasons.find(
+      (season) => season.season === selectedSeasonValue
+    );
     setSelectedSeasonEpisodes(season.episodes.length);
 
     setDialogOpen(true); // Open the dialog when a season is selected
@@ -67,7 +78,11 @@ export default function BasicSelect({ idSeasons }) {
       <FormControl fullWidth>
         {/* Dropdown to select a season */}
         <InputLabel id="demo-simple-select-label">Seasons</InputLabel>
-        <Select value={selectedSeason} label="Season" onChange={handleChangeSeason}>
+        <Select
+          value={selectedSeason}
+          label="Season"
+          onChange={handleChangeSeason}
+        >
           {idSeasons.seasons.map((season) => (
             // Menu items for each season in the dropdown
             <MenuItem key={season.season} value={season.season}>
@@ -96,10 +111,14 @@ export default function BasicSelect({ idSeasons }) {
                     width: 350,
                     maxHeight: { xs: 200, md: 167 },
                     maxWidth: { xs: 200, md: 250 },
-                    display: 'flex',
-                    margin: 'auto',
+                    display: "flex",
+                    margin: "auto",
                   }}
-                  src={idSeasons.seasons.find((season) => season.season === selectedSeason).image} // Access the image URL from the selected season object
+                  src={
+                    idSeasons.seasons.find(
+                      (season) => season.season === selectedSeason
+                    ).image
+                  } // Access the image URL from the selected season object
                 />
                 {/* Display episode details using the EpisodeDetails component */}
                 {idSeasons.seasons

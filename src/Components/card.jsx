@@ -1,28 +1,28 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Dialogs from './dialog';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { CircularProgress } from '@mui/material';
-import GroupSizesColors from './tributton'; // Make sure to import the correct component name
-import ImageCarousel from './Imagecarousel';
-import TextField from '@mui/material/TextField';
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Dialogs from "./dialog";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { CircularProgress } from "@mui/material";
+import GroupSizesColors from "./tributton"; // Make sure to import the correct component name
+import ImageCarousel from "./Imagecarousel";
+import TextField from "@mui/material/TextField";
 
 const defaultTheme = createTheme();
 
 const CardSetUp = () => {
   const [cards, setCards] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [sortingOption, setSortingOption] = React.useState('A-Z');
+  const [sortingOption, setSortingOption] = React.useState("A-Z");
 
   React.useEffect(() => {
     fetch("https://podcast-api.netlify.app/")
@@ -75,13 +75,15 @@ const CardSetUp = () => {
     } else if (sortingOption === "Descending") {
       sorted.sort((a, b) => new Date(b.updated) - new Date(a.updated));
     } else if (sortingOption === "Genre") {
-      sorted.sort((a, b) => formatGenres(a.genres).localeCompare(formatGenres(b.genres)));
+      sorted.sort((a, b) =>
+        formatGenres(a.genres).localeCompare(formatGenres(b.genres))
+      );
     }
 
     return sorted;
   }, [cards, sortingOption]);
 
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searchQuery, setSearchQuery] = React.useState("");
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
@@ -92,19 +94,12 @@ const CardSetUp = () => {
       card.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [sortedCards, searchQuery]);
-  
-
-
- 
 
   const carouselSlides = sortedCards.map((card) => ({
     id: card.id,
     title: card.title,
     image: card.image,
   }));
-
-  
-
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -114,49 +109,69 @@ const CardSetUp = () => {
         {isLoading ? (
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '100vh',
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
             }}
           >
-            <CircularProgress sx={{ height: '150vh' }} color="secondary" />
+            <CircularProgress sx={{ height: "150vh" }} color="secondary" />
             <Typography variant="h5" color="text.primary">
               Loading...
             </Typography>
           </Box>
         ) : (
           <>
-             <Grid item xs={12} sm={6} md={4} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  <ImageCarousel slides={carouselSlides} />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                <Box sx={{ display: 'flex', justifyContent: 'center', maxWidth: 400, margin: '0 auto' }}>
-
-      <TextField
-        label="Search"
-        variant="outlined"
-        value={searchQuery}
-        onChange={handleSearch}
-        sx={{ display: 'flex', justifyContent: 'center' }}
-      />
-       </Box>
-    </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <ImageCarousel slides={carouselSlides} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  maxWidth: 400,
+                  margin: "0 auto",
+                }}
+              >
+                <TextField
+                  label="Search"
+                  variant="outlined"
+                  value={searchQuery}
+                  onChange={handleSearch}
+                  sx={{ display: "flex", justifyContent: "center" }}
+                />
+              </Box>
+            </Grid>
             <Container sx={{ py: 8 }} maxWidth="md">
-              
-            <GroupSizesColors onSortingOptionChange={setSortingOption} />
+              <GroupSizesColors onSortingOptionChange={setSortingOption} />
               <Grid container spacing={4}>
-                 {/* Add the ImageCarousel here */}
-                
+                {/* Add the ImageCarousel here */}
 
                 {/* Render the rest of the cards */}
                 {filteredCards.map((card) => (
                   <Grid item key={card.id} xs={12} sm={6} md={4}>
-                    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                    <Card
+                      sx={{
+                        height: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
+                    >
                       <CardMedia
                         component="span"
                         sx={{
-                          pt: '100%',
+                          pt: "100%",
                         }}
                         image={card.image}
                         onLoad={() => setIsLoading(false)}
@@ -165,9 +180,15 @@ const CardSetUp = () => {
                         <Typography gutterBottom variant="h5" component="h2">
                           {card.title}
                         </Typography>
-                        <Typography component="h2">Genres: {formatGenres(card.genres)}</Typography>
-                        <Typography component="h2">Seasons: {card.seasons}</Typography>
-                        <Typography component="h2">Updated: {card.updated}</Typography>
+                        <Typography component="h2">
+                          Genres: {formatGenres(card.genres)}
+                        </Typography>
+                        <Typography component="h2">
+                          Seasons: {card.seasons}
+                        </Typography>
+                        <Typography component="h2">
+                          Updated: {card.updated}
+                        </Typography>
                       </CardContent>
                       <CardActions>
                         <Dialogs
@@ -188,13 +209,20 @@ const CardSetUp = () => {
           </>
         )}
       </main>
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer"></Box>
-      <Typography variant="subtitle1" align="center" color="text.secondary" component="p">
-        Icon made by <a href=""> Reion </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer"></Box>
+      <Typography
+        variant="subtitle1"
+        align="center"
+        color="text.secondary"
+        component="p"
+      >
+        Icon made by <a href=""> Reion </a> from{" "}
+        <a href="https://www.flaticon.com/" title="Flaticon">
+          www.flaticon.com
+        </a>
       </Typography>
     </ThemeProvider>
   );
 };
 
 export default CardSetUp;
-
