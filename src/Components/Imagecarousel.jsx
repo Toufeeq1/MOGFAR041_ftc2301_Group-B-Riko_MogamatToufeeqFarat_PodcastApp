@@ -1,7 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
+
 import React from "react";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -9,15 +6,18 @@ import Typography from "@mui/material/Typography";
 import MobileStepper from "@mui/material/MobileStepper";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import { Link } from "react-router-dom";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
+import useMediaQuery from "@mui/material/useMediaQuery";
+import PropTypes from "prop-types";
+
+// Define the ImageCarousel component
 const ImageCarousel = ({ slides }) => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const maxSteps = slides.length;
 
+  // Function to handle advancing to the next slide
   const handleNext = () => {
     setActiveStep((prevActiveStep) => (prevActiveStep + 1) % maxSteps);
   };
@@ -28,8 +28,10 @@ const ImageCarousel = ({ slides }) => {
     return () => {
       clearInterval(interval); // Clear the interval when the component unmounts
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Function to handle going back to the previous slide
   const handleBack = () => {
     setActiveStep(
       (prevActiveStep) => (prevActiveStep - 1 + maxSteps) % maxSteps
@@ -75,4 +77,14 @@ const ImageCarousel = ({ slides }) => {
   );
 };
 
-export default ImageCarousel;
+// Define prop types for the ImageCarousel component
+ImageCarousel.propTypes = {
+  slides: PropTypes.arrayOf(
+    PropTypes.shape({
+      image: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
+
+export default ImageCarousel; // Export the ImageCarousel component

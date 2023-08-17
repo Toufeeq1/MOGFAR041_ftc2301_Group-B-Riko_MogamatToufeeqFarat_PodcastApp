@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
+
+// Import required React components and libraries
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -10,30 +12,35 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Dialogs from "./dialog";
+import Dialogs from "./dialog"; // Assuming this is a custom component
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CircularProgress } from "@mui/material";
 import GroupSizesColors from "./tributton"; // Make sure to import the correct component name
-import ImageCarousel from "./Imagecarousel";
+import ImageCarousel from "./Imagecarousel"; // Assuming this is a custom component
 import TextField from "@mui/material/TextField";
 
+// Create a default theme using MUI's createTheme
 const defaultTheme = createTheme();
 
+// Define the main functional component
 const CardSetUp = () => {
-  const [cards, setCards] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [sortingOption, setSortingOption] = React.useState("A-Z");
+  // Set up states using React hooks
+  const [cards, setCards] = React.useState([]); // State to hold podcast data
+  const [isLoading, setIsLoading] = React.useState(true); // State to track loading status
+  const [sortingOption, setSortingOption] = React.useState("A-Z"); // State for sorting options
 
+  // Fetch podcast data from the specified URL when the component mounts
   React.useEffect(() => {
     fetch("https://podcast-api.netlify.app/")
       .then((res) => res.json())
       .then((data) => {
-        setCards(data);
-        setIsLoading(false);
+        setCards(data); // Update the state with fetched data
+        setIsLoading(false); // Set loading status to false
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error)); // Log errors if any
   }, []);
 
+  // Map of genre IDs to their corresponding names
   const genreMap = {
     1: "Personal Growth",
     2: "True Crime and Investigative Journalism",
@@ -46,10 +53,12 @@ const CardSetUp = () => {
     9: "Kids and Family",
   };
 
+  // Function to format an array of genre IDs into a comma-separated string of genre names
   function formatGenres(genreIds) {
     return genreIds.map((genreId) => genreMap[genreId]).join(", ");
   }
 
+  // Function to format a timestamp into a readable date format
   function formatTime(timeString) {
     const updateTime = new Date(timeString);
     return updateTime.toLocaleString("en-US", {
@@ -57,7 +66,7 @@ const CardSetUp = () => {
     });
   }
 
-  // Format the "updated" field for each show
+  // Format the "updated" field for each show in the fetched data
   cards.forEach((show) => {
     show.updated = formatTime(show.updated);
   });
@@ -80,14 +89,16 @@ const CardSetUp = () => {
       );
     }
 
-    return sorted;
+    return sorted; // Return the sorted array based on the selected sorting option
   }, [cards, sortingOption]);
 
+  // State and function to handle the search query
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
   };
+
   // Filter the cards based on the search query
   const filteredCards = React.useMemo(() => {
     return sortedCards.filter((card) =>
@@ -95,17 +106,20 @@ const CardSetUp = () => {
     );
   }, [sortedCards, searchQuery]);
 
+  // Create an array of carousel slide data
   const carouselSlides = sortedCards.map((card) => ({
     id: card.id,
     title: card.title,
     image: card.image,
   }));
 
+  // Return the JSX structure for rendering the component
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
 
       <main>
+        {/* If loading, show a loading indicator */}
         {isLoading ? (
           <Box
             sx={{
@@ -122,6 +136,7 @@ const CardSetUp = () => {
           </Box>
         ) : (
           <>
+            {/* Render the image carousel */}
             <Grid
               item
               xs={12}
@@ -135,6 +150,8 @@ const CardSetUp = () => {
             >
               <ImageCarousel slides={carouselSlides} />
             </Grid>
+
+            {/* Render the search input */}
             <Grid item xs={12} md={6}>
               <Box
                 sx={{
@@ -153,12 +170,12 @@ const CardSetUp = () => {
                 />
               </Box>
             </Grid>
+
+            {/* Render the container for the podcast cards */}
             <Container sx={{ py: 8 }} maxWidth="md">
               <GroupSizesColors onSortingOptionChange={setSortingOption} />
               <Grid container spacing={4}>
-                {/* Add the ImageCarousel here */}
-
-                {/* Render the rest of the cards */}
+                {/* Render each podcast card */}
                 {filteredCards.map((card) => (
                   <Grid item key={card.id} xs={12} sm={6} md={4}>
                     <Card
@@ -191,6 +208,7 @@ const CardSetUp = () => {
                         </Typography>
                       </CardContent>
                       <CardActions>
+                        {/* Pass data to the Dialogs component */}
                         <Dialogs
                           cardid={card.id}
                           cardimage={card.image}
@@ -209,7 +227,9 @@ const CardSetUp = () => {
           </>
         )}
       </main>
+      {/* Render the footer */}
       <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer"></Box>
+      {/* Render the attribution */}
       <Typography
         variant="subtitle1"
         align="center"
@@ -225,4 +245,5 @@ const CardSetUp = () => {
   );
 };
 
+// Export the CardSetUp component
 export default CardSetUp;

@@ -1,4 +1,5 @@
-import React from 'react'
+import PropTypes from 'prop-types';
+import React from 'react';
 import {
   Button,
   Dialog,
@@ -7,17 +8,17 @@ import {
   DialogContentText,
   DialogActions,
   Box
-} from '@mui/material'
-import BasicSelect from './Season'
+} from '@mui/material';
+import BasicSelect from './Season'; // Assuming this is a custom component for selecting seasons
 
-import { useState } from 'react'
+import { useState } from 'react';
 
-// eslint-disable-next-line react/prop-types, no-unused-vars
+// Define the Dialogs component
 const Dialogs = ({ cardimage, cardtitle, carddescription, cardgenres, cardupdated, cardid }) => {
-  const [showid, setShowid] = React.useState()
+  // State to hold additional show data
+  const [showid, setShowid] = React.useState();
 
-
-
+  // Fetch additional show data when the component mounts
   React.useEffect(() => {
     fetch(`https://podcast-api.netlify.app/id/${cardid}`)
       .then(res => res.json())
@@ -27,14 +28,15 @@ const Dialogs = ({ cardimage, cardtitle, carddescription, cardgenres, cardupdate
       .catch(error => console.error(error));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // console.log(showid.seasons)
 
+  // State to control the dialog open state
+  const [open, setOpen] = useState(false);
 
-  const [open, setOpen] = useState(false)
   return (
     <>
-
+      {/* Button to open the dialog */}
       <Button onClick={() => setOpen(true)}>Description</Button>
+      {/* The dialog itself */}
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
@@ -45,6 +47,7 @@ const Dialogs = ({ cardimage, cardtitle, carddescription, cardgenres, cardupdate
           margin: 'auto'
         }} id='dialog-title'>{cardtitle}</DialogTitle>
         <DialogContent>
+          {/* Display the podcast image */}
           <Box
             component="img"
             sx={{
@@ -57,27 +60,40 @@ const Dialogs = ({ cardimage, cardtitle, carddescription, cardgenres, cardupdate
             }}
             src={cardimage}
           />
+          {/* Display the podcast description */}
           <DialogContentText >
             Description: {carddescription}
           </DialogContentText>
+          {/* Display the podcast updated date */}
           <DialogContentText >
             Updated: {cardupdated}
           </DialogContentText>
+          {/* Display the podcast genres */}
           <DialogContentText >
             Genres: {cardgenres}
           </DialogContentText>
+          {/* Render the BasicSelect component */}
           <DialogActions>
             <BasicSelect idSeasons={showid} />
-
           </DialogActions>
         </DialogContent>
+        {/* Dialog actions, including the close button */}
         <DialogActions>
           <Button onClick={() => setOpen(false)}>Close</Button>
-
         </DialogActions>
       </Dialog>
     </>
-  )
-}
+  );
+};
+// Define prop types for the Dialogs component
+Dialogs.propTypes = {
+  cardimage: PropTypes.string.isRequired,
+  cardtitle: PropTypes.string.isRequired, 
+  carddescription: PropTypes.string.isRequired,
+  cardgenres: PropTypes.arrayOf(PropTypes.number).isRequired,
+  cardupdated: PropTypes.string.isRequired,
+  cardid: PropTypes.number.isRequired,
+  genreMap: PropTypes.object.isRequired,
+};
 
-export default Dialogs
+export default Dialogs; // Export the Dialogs component
