@@ -3,7 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-// import Link from '@mui/material/Link';
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -13,6 +12,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React from "react";
 import { supabase } from "./client";
 
+// Create a default Material-UI theme
 const defaultTheme = createTheme();
 
 function SignUpPage() {
@@ -21,7 +21,7 @@ function SignUpPage() {
     password: "",
   });
 
-  console.log(FormData);
+  // Event handler to update form data when input changes
   const handleChange = (event) => {
     event.preventDefault();
     setFormData((prevFormData) => {
@@ -32,19 +32,26 @@ function SignUpPage() {
     });
   };
 
+  // Event handler to submit the form
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      // eslint-disable-next-line no-unused-vars
       const { data, error } = await supabase.auth.signUp({
         email: FormData.email,
         password: FormData.password,
       });
-      alert("check you email for varification link");
+  
+      // You can use the `data` or `error` variables here
+      if (data) {
+        alert("Check your email for verification link");
+      } else if (error) {
+        alert(error.message);
+      }
     } catch (error) {
-      alert(error);
+      alert(error.message);
     }
   };
+  
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -64,12 +71,8 @@ function SignUpPage() {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            {/* Email input */}
             <TextField
               margin="normal"
               required
@@ -81,6 +84,7 @@ function SignUpPage() {
               autoFocus
               onChange={handleChange}
             />
+            {/* Password input */}
             <TextField
               margin="normal"
               required
@@ -93,6 +97,7 @@ function SignUpPage() {
               onChange={handleChange}
             />
 
+            {/* Submit button */}
             <Button
               type="submit"
               fullWidth
@@ -102,6 +107,7 @@ function SignUpPage() {
             >
               Sign In
             </Button>
+            {/* Already have an account? Login link */}
             <Grid container>
               <Grid item>
                 <Link to="/" variant="body2">
@@ -117,3 +123,4 @@ function SignUpPage() {
 }
 
 export default SignUpPage;
+

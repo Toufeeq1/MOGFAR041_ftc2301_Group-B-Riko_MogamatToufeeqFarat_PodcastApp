@@ -47,7 +47,7 @@ const EpisodeDetails = ({ episode }) => {
   );
 };
 
-// BasicSelect component
+// Define the BasicSelect component
 export default function BasicSelect({ idSeasons }) {
   const [selectedSeason, setSelectedSeason] = useState("");
   const [isDialogOpen, setDialogOpen] = useState(false);

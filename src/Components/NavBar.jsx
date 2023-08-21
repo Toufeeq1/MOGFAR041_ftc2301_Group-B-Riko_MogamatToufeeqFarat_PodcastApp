@@ -1,5 +1,6 @@
 import { Typography, AppBar, CssBaseline, Toolbar, Box } from "@mui/material";
 
+// Define the NavBar component
 const NavBar = () => {
   return (
     <div>
@@ -29,4 +30,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default NavBar; // Export the NavBar component
