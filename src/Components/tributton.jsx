@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-import * as React from "react";
+import PropTypes from 'prop-types';
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 
@@ -75,6 +73,10 @@ const GroupSizesColors = ({ onSortingOptionChange }) => {
       </Grid>
     </Grid>
   );
+};
+
+GroupSizesColors.propTypes = {
+  onSortingOptionChange: PropTypes.func.isRequired,
 };
 
 export default GroupSizesColors;
