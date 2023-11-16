@@ -139,7 +139,7 @@ function SignUpPage() {
                   {/* Already have an account? Login link */}
                   <Grid container>
                     <Grid item>
-                      <Link to="LoginPage" variant="body2">
+                      <Link to="/" variant="body2">
                         {"Already have an account? Login"}
                       </Link>
                     </Grid>

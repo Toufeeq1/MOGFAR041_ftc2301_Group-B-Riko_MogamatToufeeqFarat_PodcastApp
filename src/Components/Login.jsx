@@ -137,7 +137,7 @@ function LoginPage({ setToken }) {
                   <Grid container>
                     <Grid item>
                       {/* Link to the SignUp page */}
-                      <Link to="/" variant="body2">
+                      <Link to="/SignUp" variant="body2">
                         {"Don't have an account? Sign up"}
                       </Link>
                     </Grid>
