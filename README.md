@@ -1,13 +1,20 @@
 
-# Audio Flow 
-[![React](https://img.shields.io/badge/React-16.x-blue?style=flat-square&logo=react)](https://reactjs.org/)
-[![Supabase](https://img.shields.io/badge/Supabase-1.x-blue?style=flat-square&logo=supabase)](https://supabase.io/)
-[![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?style=flat-square&logo=javascript)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![Material-UI](https://img.shields.io/badge/Material--UI-4.x-blue?style=flat-square&logo=material-ui)](https://material-ui.com/)
+# Audio Flow
+
+Enhance your podcast listening experience with Audio Flow.\
+[![Website](https://img.shields.io/badge/Website-Audio_Flow-blue?style=flat-square&logo=netlify)](https://audioflow.netlify.app/)\
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5e30c764-3646-4957-ab98-d228fbd9aa1f/deploy-status)](https://app.netlify.com/sites/5e30c764-3646-4957-ab98-d228fbd9aa1f)\
+[![React](https://img.shields.io/badge/React-16.x-blue?style=flat-square&logo=react)](https://reactjs.org/)\
+[![Supabase](https://img.shields.io/badge/Supabase-1.x-blue?style=flat-square&logo=supabase)](https://supabase.io/)\
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?style=flat-square&logo=javascript)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)\
+[![Material-UI](https://img.shields.io/badge/Material--UI-4.x-blue?style=flat-square&logo=material-ui)](https://material-ui.com/)\
 [![React Router](https://img.shields.io/badge/React_Router-5.x-blue?style=flat-square&logo=react-router)](https://reactrouter.com/)
 
-Link to the site [![Website](https://img.shields.io/badge/Website-Audio_Flow-blue?style=flat-square&logo=netlify)](https://audioflow.netlify.app/) \
-currrent status [![Netlify Status](https://api.netlify.com/api/v1/badges/5e30c764-3646-4957-ab98-d228fbd9aa1f/deploy-status)](https://app.netlify.com/sites/5e30c764-3646-4957-ab98-d228fbd9aa1f)
+## Quick Links
+- [Visit Audio Flow](https://audioflow.netlify.app/)
+- [Netlify Deployment Status](https://app.netlify.com/sites/5e30c764-3646-4957-ab98-d228fbd9aa1f)
+
+
 
 1)First, you'll land on the Login page.
 
