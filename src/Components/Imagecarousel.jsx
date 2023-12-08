@@ -81,8 +81,8 @@ const ImageCarousel = ({ slides }) => {
 ImageCarousel.propTypes = {
   slides: PropTypes.arrayOf(
     PropTypes.shape({
-      image: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
+      image: PropTypes.string,
+      label: PropTypes.string
     })
   ).isRequired,
 };

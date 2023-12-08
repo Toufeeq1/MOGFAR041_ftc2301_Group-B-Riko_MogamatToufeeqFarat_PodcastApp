@@ -210,13 +210,14 @@ const CardSetUp = () => {
                       <CardActions>
                         {/* Pass data to the Dialogs component */}
                         <Dialogs
-                          cardid={card.id}
+                          cardid={parseInt(card.id, 10)}
                           cardimage={card.image}
                           cardtitle={card.title}
                           carddescription={card.description}
                           cardseasons={card.seasons}
-                          cardgenres={formatGenres(card.genres)}
+                          cardgenres={Array.isArray(card.genres) ? card.genres : []}
                           cardupdated={card.updated}
+                          genreMap={genreMap}
                         />
                       </CardActions>
                     </Card>
@@ -247,3 +248,4 @@ const CardSetUp = () => {
 
 // Export the CardSetUp component
 export default CardSetUp;
+
