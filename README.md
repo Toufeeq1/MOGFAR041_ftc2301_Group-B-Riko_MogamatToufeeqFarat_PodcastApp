@@ -13,6 +13,7 @@ Enhance your podcast listening experience with Audio Flow.\
 ## Quick Links
 - [Visit Audio Flow](https://audioflow.netlify.app/)
 - [Netlify Deployment Status](https://app.netlify.com/sites/5e30c764-3646-4957-ab98-d228fbd9aa1f)
+- [GitHub Pages](https://toufeeq1.github.io/MOGFAR041_ftc2301_Group-B-Riko_MogamatToufeeqFarat_PodcastApp/)
 
 
 
