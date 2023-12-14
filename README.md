@@ -14,6 +14,12 @@ Enhance your podcast listening experience with Audio Flow.\
 - [Visit Audio Flow](https://audioflow.netlify.app/)
 - [Netlify Deployment Status](https://app.netlify.com/sites/5e30c764-3646-4957-ab98-d228fbd9aa1f)
 - [GitHub Pages](http://audioflow.netlify.app/)
+- 
+**Watch the video tutorial:** [![Watch the video](https://img.shields.io/badge/YouTube-Watch%20Now-red)](https://youtu.be/_FSxhlDgxTI)
+  
+[![Preview](https://img.youtube.com/vi/_FSxhlDgxTI/0.jpg)](https://youtu.be/_FSxhlDgxTI)
+
+
 
 
 
