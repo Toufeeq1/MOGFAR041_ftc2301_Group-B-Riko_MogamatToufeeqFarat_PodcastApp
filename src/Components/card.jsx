@@ -109,7 +109,7 @@ const CardSetUp = () => {
   // Create an array of carousel slide data
   const carouselSlides = sortedCards.map((card) => ({
     id: card.id,
-    title: card.title,
+    label: card.title,
     image: card.image,
   }));
 

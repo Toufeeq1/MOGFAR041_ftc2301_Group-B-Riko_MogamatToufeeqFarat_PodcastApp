@@ -1,7 +1,10 @@
 
 import { useState } from "react";
-import StarIcon from "@mui/icons-material/Star";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
+import StarIconImport from "@mui/icons-material/Star";
+import StarBorderIconImport from "@mui/icons-material/StarBorder";
+
+const StarIcon = StarIconImport?.default ?? StarIconImport;
+const StarBorderIcon = StarBorderIconImport?.default ?? StarBorderIconImport;
 
 // Define the LikeButton component
 const LikeButton = () => {

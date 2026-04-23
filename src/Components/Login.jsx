@@ -1,18 +1,16 @@
 // Import necessary components and libraries
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import LockOutlinedIconImport from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { styled } from '@mui/system';
-import { supabase } from "./client";
 import PropTypes from 'prop-types';
 
 // Define a styled component for the background container
@@ -36,14 +34,18 @@ const ContentContainer = styled('div')({
 
 // Create a default theme using MUI's createTheme function
 const defaultTheme = createTheme();
+const LockOutlinedIcon =
+  LockOutlinedIconImport?.default ?? LockOutlinedIconImport;
 
 // Define the LoginPage component
 function LoginPage({ setToken }) {
+  const VALID_USERNAME = "toufeeq";
+  const VALID_PASSWORD = "latais";
   let navigate = useNavigate();
 
   // State to store form data
   const [FormData, setFormData] = React.useState({
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -59,21 +61,20 @@ function LoginPage({ setToken }) {
   };
 
   // Function to handle form submission
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    try {
-      // Sign in using Supabase auth
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: FormData.email,
-        password: FormData.password,
-      });
+    const isValidUser =
+      FormData.username.trim() === VALID_USERNAME &&
+      FormData.password === VALID_PASSWORD;
 
-      if (error) throw error;
-      console.log(data);
-      setToken(data);
+    if (isValidUser) {
+      setToken({
+        username: VALID_USERNAME,
+        authenticatedAt: new Date().toISOString(),
+      });
       navigate("/Home");
-    } catch (error) {
-      alert(error.message); // Display error message
+    } else {
+      alert("Invalid username or password.");
     }
   };
 
@@ -107,10 +108,10 @@ function LoginPage({ setToken }) {
                     margin="normal"
                     required
                     fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
+                    id="username"
+                    label="Username"
+                    name="username"
+                    autoComplete="username"
                     autoFocus
                     onChange={handleChange}
                   />
@@ -134,14 +135,9 @@ function LoginPage({ setToken }) {
                   >
                     Sign In
                   </Button>
-                  <Grid container>
-                    <Grid item>
-                      {/* Link to the SignUp page */}
-                      <Link to="/SignUp" variant="body2">
-                        {"Don't have an account? Sign up"}
-                      </Link>
-                    </Grid>
-                  </Grid>
+                  <Typography variant="body2" color="text.secondary">
+                    Use username: <strong>toufeeq</strong> and password: <strong>latais</strong>
+                  </Typography>
                 </Box>
               </Box>
             </Container>

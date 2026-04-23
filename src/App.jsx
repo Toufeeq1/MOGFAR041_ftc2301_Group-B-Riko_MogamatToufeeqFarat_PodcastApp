@@ -3,7 +3,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./Components/Login";
 import Home from "./Components/home";
-import SignUpPage from "./Components/SignUpPage";
 import React, { useEffect } from "react";
 
 // Define and export the main App component
@@ -28,12 +27,10 @@ export default function App() {
 
   // The main render function that returns the JSX to be rendered
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <div>
         {/* Define routes for different pages using the Routes and Route components */}
         <Routes>
-          {/* When the URL path matches '/SignUp', render the SignUpPage component */}
-          <Route path="SignUp" element={<SignUpPage />} />
           {/* When the URL path is '/', render the LoginPage component and pass the 'setToken' function as a prop */}
           <Route path="/" element={<LoginPage setToken={setToken} />} />
           {/* If 'token' is true (i.e., user is logged in), then render the Home component when the URL path matches '/Home' */}

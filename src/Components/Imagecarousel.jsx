@@ -3,9 +3,8 @@ import React from "react";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import MobileStepper from "@mui/material/MobileStepper";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
 import PropTypes from "prop-types";
@@ -61,13 +60,14 @@ const ImageCarousel = ({ slides }) => {
         position="static"
         activeStep={activeStep}
         nextButton={
-          <KeyboardArrowRight
-            onClick={handleNext}
-            disabled={activeStep === maxSteps - 1}
-          />
+          <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
+            Next
+          </Button>
         }
         backButton={
-          <KeyboardArrowLeft onClick={handleBack} disabled={activeStep === 0} />
+          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+            Back
+          </Button>
         }
       />
       <Typography align="center" mt={2}>
