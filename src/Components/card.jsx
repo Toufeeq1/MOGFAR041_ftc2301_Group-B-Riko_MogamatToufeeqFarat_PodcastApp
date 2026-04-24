@@ -18,9 +18,13 @@ import { CircularProgress } from "@mui/material";
 import GroupSizesColors from "./tributton"; // Make sure to import the correct component name
 import ImageCarousel from "./Imagecarousel"; // Assuming this is a custom component
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 // Create a default theme using MUI's createTheme
 const defaultTheme = createTheme();
+const INITIAL_VISIBLE_CARDS = 12;
+const LOAD_MORE_COUNT = 12;
+const FEATURED_CAROUSEL_SLIDES = 8;
 
 // Define the main functional component
 const CardSetUp = () => {
@@ -28,6 +32,10 @@ const CardSetUp = () => {
   const [cards, setCards] = React.useState([]); // State to hold podcast data
   const [isLoading, setIsLoading] = React.useState(true); // State to track loading status
   const [sortingOption, setSortingOption] = React.useState("A-Z"); // State for sorting options
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [visibleCardsCount, setVisibleCardsCount] = React.useState(
+    INITIAL_VISIBLE_CARDS
+  );
 
   // Fetch podcast data from the specified URL when the component mounts
   React.useEffect(() => {
@@ -37,7 +45,10 @@ const CardSetUp = () => {
         setCards(data); // Update the state with fetched data
         setIsLoading(false); // Set loading status to false
       })
-      .catch((error) => console.error(error)); // Log errors if any
+      .catch((error) => {
+        console.error(error); // Log errors if any
+        setIsLoading(false);
+      });
   }, []);
 
   // Map of genre IDs to their corresponding names
@@ -66,23 +77,26 @@ const CardSetUp = () => {
     });
   }
 
-  // Format the "updated" field for each show in the fetched data
-  cards.forEach((show) => {
-    show.updated = formatTime(show.updated);
-  });
+  const cardsWithDates = React.useMemo(() => {
+    return cards.map((card) => ({
+      ...card,
+      updatedLabel: formatTime(card.updated),
+      updatedTimestamp: new Date(card.updated).getTime(),
+    }));
+  }, [cards]);
 
   // Sorting logic based on the selected sorting option
   const sortedCards = React.useMemo(() => {
-    const sorted = [...cards];
+    const sorted = [...cardsWithDates];
 
     if (sortingOption === "A-Z") {
       sorted.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortingOption === "Z-A") {
       sorted.sort((a, b) => b.title.localeCompare(a.title));
     } else if (sortingOption === "Ascending") {
-      sorted.sort((a, b) => new Date(a.updated) - new Date(b.updated));
+      sorted.sort((a, b) => a.updatedTimestamp - b.updatedTimestamp);
     } else if (sortingOption === "Descending") {
-      sorted.sort((a, b) => new Date(b.updated) - new Date(a.updated));
+      sorted.sort((a, b) => b.updatedTimestamp - a.updatedTimestamp);
     } else if (sortingOption === "Genre") {
       sorted.sort((a, b) =>
         formatGenres(a.genres).localeCompare(formatGenres(b.genres))
@@ -90,10 +104,7 @@ const CardSetUp = () => {
     }
 
     return sorted; // Return the sorted array based on the selected sorting option
-  }, [cards, sortingOption]);
-
-  // State and function to handle the search query
-  const [searchQuery, setSearchQuery] = React.useState("");
+  }, [cardsWithDates, sortingOption]);
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
@@ -106,12 +117,28 @@ const CardSetUp = () => {
     );
   }, [sortedCards, searchQuery]);
 
+  React.useEffect(() => {
+    setVisibleCardsCount(INITIAL_VISIBLE_CARDS);
+  }, [sortingOption, searchQuery, cards.length]);
+
+  const displayedCards = React.useMemo(() => {
+    return filteredCards.slice(0, visibleCardsCount);
+  }, [filteredCards, visibleCardsCount]);
+
+  const hasMoreCards = visibleCardsCount < filteredCards.length;
+
+  const handleLoadMore = () => {
+    setVisibleCardsCount((prevCount) => prevCount + LOAD_MORE_COUNT);
+  };
+
   // Create an array of carousel slide data
-  const carouselSlides = sortedCards.map((card) => ({
-    id: card.id,
-    label: card.title,
-    image: card.image,
-  }));
+  const carouselSlides = React.useMemo(() => {
+    return sortedCards.slice(0, FEATURED_CAROUSEL_SLIDES).map((card) => ({
+      id: card.id,
+      label: card.title,
+      image: card.image,
+    }));
+  }, [sortedCards]);
 
   // Return the JSX structure for rendering the component
   return (
@@ -176,7 +203,7 @@ const CardSetUp = () => {
               <GroupSizesColors onSortingOptionChange={setSortingOption} />
               <Grid container spacing={4}>
                 {/* Render each podcast card */}
-                {filteredCards.map((card) => (
+                {displayedCards.map((card) => (
                   <Grid item key={card.id} xs={12} sm={6} md={4}>
                     <Card
                       sx={{
@@ -186,12 +213,18 @@ const CardSetUp = () => {
                       }}
                     >
                       <CardMedia
-                        component="span"
+                        component="img"
                         sx={{
-                          pt: "100%",
+                          width: "100%",
+                          aspectRatio: "1 / 1",
+                          objectFit: "cover",
                         }}
                         image={card.image}
-                        onLoad={() => setIsLoading(false)}
+                        alt={card.title}
+                        loading="lazy"
+                        decoding="async"
+                        width="320"
+                        height="320"
                       />
                       <CardContent sx={{ flexGrow: 1 }}>
                         <Typography gutterBottom variant="h5" component="h2">
@@ -204,7 +237,7 @@ const CardSetUp = () => {
                           Seasons: {card.seasons}
                         </Typography>
                         <Typography component="h2">
-                          Updated: {card.updated}
+                          Updated: {card.updatedLabel}
                         </Typography>
                       </CardContent>
                       <CardActions>
@@ -216,7 +249,7 @@ const CardSetUp = () => {
                           carddescription={card.description}
                           cardseasons={card.seasons}
                           cardgenres={Array.isArray(card.genres) ? card.genres : []}
-                          cardupdated={card.updated}
+                          cardupdated={card.updatedLabel}
                           genreMap={genreMap}
                         />
                       </CardActions>
@@ -224,6 +257,13 @@ const CardSetUp = () => {
                   </Grid>
                 ))}
               </Grid>
+              {hasMoreCards && (
+                <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+                  <Button variant="contained" onClick={handleLoadMore}>
+                    Load more
+                  </Button>
+                </Box>
+              )}
             </Container>
           </>
         )}

@@ -21,14 +21,26 @@ const ImageCarousel = ({ slides }) => {
     setActiveStep((prevActiveStep) => (prevActiveStep + 1) % maxSteps);
   };
 
+  React.useEffect(() => {
+    if (maxSteps === 0) {
+      setActiveStep(0);
+      return;
+    }
+    if (activeStep >= maxSteps) {
+      setActiveStep(0);
+    }
+  }, [activeStep, maxSteps]);
+
   // Start the auto-advancing timer when the component mounts
   React.useEffect(() => {
+    if (maxSteps < 2) {
+      return undefined;
+    }
     const interval = setInterval(handleNext, 5000); // Adjust the interval time here (in milliseconds)
     return () => {
       clearInterval(interval); // Clear the interval when the component unmounts
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [maxSteps]);
 
   // Function to handle going back to the previous slide
   const handleBack = () => {
@@ -36,6 +48,10 @@ const ImageCarousel = ({ slides }) => {
       (prevActiveStep) => (prevActiveStep - 1 + maxSteps) % maxSteps
     );
   };
+
+  if (maxSteps === 0) {
+    return null;
+  }
 
   return (
     <Box sx={{ justifyContent: "center", maxWidth: 400, flexGrow: 1 }}>
@@ -53,6 +69,8 @@ const ImageCarousel = ({ slides }) => {
         }}
         src={slides[activeStep].image}
         alt={slides[activeStep].label}
+        loading="eager"
+        decoding="async"
       />
       <MobileStepper
         variant={isSmallScreen ? "progress" : "text"}

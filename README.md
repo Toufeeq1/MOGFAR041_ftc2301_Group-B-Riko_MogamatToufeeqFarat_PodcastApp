@@ -1,155 +1,250 @@
+# Audio Flow Podcast App
 
-# Audio Flow
+## 1. Project Overview
+This project is a podcast web app built with React and Vite, and deployed on Netlify.
 
-Enhance your podcast listening experience with Audio Flow.\
-[![Website](https://img.shields.io/badge/Website-Audio_Flow-blue?style=flat-square&logo=netlify)](https://audioflow.netlify.app/)\
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5e30c764-3646-4957-ab98-d228fbd9aa1f/deploy-status)](https://app.netlify.com/sites/5e30c764-3646-4957-ab98-d228fbd9aa1f)\
-[![React](https://img.shields.io/badge/React-16.x-blue?style=flat-square&logo=react)](https://reactjs.org/)\
-[![Supabase](https://img.shields.io/badge/Supabase-1.x-blue?style=flat-square&logo=supabase)](https://supabase.io/)\
-[![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?style=flat-square&logo=javascript)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)\
-[![Material-UI](https://img.shields.io/badge/Material--UI-4.x-blue?style=flat-square&logo=material-ui)](https://material-ui.com/)\
-[![React Router](https://img.shields.io/badge/React_Router-5.x-blue?style=flat-square&logo=react-router)](https://reactrouter.com/)
+At a high level, the app:
+- shows a login screen first
+- loads podcast data from `https://podcast-api.netlify.app/`
+- displays podcast cards with search and sorting
+- opens dialogs for show, season, and episode details
+- lets users play episode audio in the browser
 
-## Quick Links
-- [Visit Audio Flow](https://audioflow.netlify.app/)
-- [Netlify Deployment Status](https://app.netlify.com/sites/5e30c764-3646-4957-ab98-d228fbd9aa1f)
-- [GitHub Pages](http://audioflow.netlify.app/)
-- 
-**Watch the video tutorial:** [![Watch the video](https://img.shields.io/badge/YouTube-Watch%20Now-red)](https://youtu.be/_FSxhlDgxTI)
-  
-[![Preview](https://img.youtube.com/vi/_FSxhlDgxTI/0.jpg)](https://youtu.be/_FSxhlDgxTI)
+## 2. Features
+- Login gate using a simple username/password check in the frontend.
+- Session persistence using `sessionStorage` token.
+- Podcast card list with:
+- title
+- genres
+- season count
+- updated date
+- Search by show title.
+- Sort controls:
+- `A-Z`
+- `Z-A`
+- date `Ascending`
+- date `Descending`
+- `Genre`
+- Featured image carousel at the top of the home screen.
+- "Load more" pagination for cards.
+- Show details dialog per card.
+- Season picker dialog with episode list.
+- Episode audio playback (`<audio controls>`).
+- Per-episode star toggle (UI-only, not persisted).
 
+## 3. Tech Stack
+- React 18
+- Vite 8
+- React Router DOM 6
+- Material UI (MUI) + Emotion
+- JavaScript (ES modules)
+- Netlify hosting
 
+Dependencies are defined in `package.json`.
 
+## 4. Project Structure (Folder/File Explanation)
+```text
+.
+├─ public/
+│  ├─ sound.png
+│  └─ a_more_colorful_aurora_borealis__northern_lights__by_aiartbysurya_dfkr6bh.png
+├─ src/
+│  ├─ main.jsx
+│  ├─ App.jsx
+│  └─ Components/
+│     ├─ home.jsx
+│     ├─ NavBar.jsx
+│     ├─ card.jsx
+│     ├─ tributton.jsx
+│     ├─ dialog.jsx
+│     ├─ Season.jsx
+│     ├─ Imagecarousel.jsx
+│     ├─ likebutton.jsx
+│     ├─ Login.jsx
+│     ├─ SignUpPage.jsx
+│     └─ client.jsx
+├─ package.json
+├─ vite.config.js
+└─ CNAME
+```
 
+File purpose:
+- `src/main.jsx`: React entry point, renders `<App />`.
+- `src/App.jsx`: Router + session token gate for `/` and `/Home`.
+- `src/Components/home.jsx`: Home page shell (`NavBar` + `CardSetUp`).
+- `src/Components/card.jsx`: Main podcast list screen logic (fetch, sort, search, UI).
+- `src/Components/dialog.jsx`: Show-level modal; fetches full show data by id.
+- `src/Components/Season.jsx`: Season selector + full-screen episode details dialog.
+- `src/Components/Imagecarousel.jsx`: Top featured slideshow.
+- `src/Components/likebutton.jsx`: Local star toggle button.
+- `src/Components/Login.jsx`: Login form and hardcoded credential validation.
+- `src/Components/tributton.jsx`: Sort button groups.
+- `src/Components/SignUpPage.jsx`: Supabase sign-up page component, currently not routed.
+- `src/Components/client.jsx`: Supabase client setup (env-based), currently not used by active routes.
+- `vite.config.js`: Vite config with React plugin.
+- `CNAME`: Custom domain indicator (`audioflow.netlify.app`).
 
-1)First, you'll land on the Login page.
+## 5. Application Flow (Entry Point, Routing, State/Data Flow)
+### Entry point
+1. `src/main.jsx` mounts the app into `#root`.
+2. `<App />` is wrapped in `React.StrictMode`.
 
-2)If you don't have an account yet, you'll need to click on a link that takes you to the Sign Up page.
+### Routing flow
+1. `src/App.jsx` uses `BrowserRouter`.
+2. Route `/` renders `LoginPage`.
+3. Route `/Home` is only defined when `token` exists.
+4. On successful login, app navigates to `/Home`.
+5. Token is stored in `sessionStorage` and restored on page load.
 
-3)On the Sign Up page, you'll be asked to provide your email address and choose a password.
+### Data/state flow
+1. `CardSetUp` (`card.jsx`) fetches show previews from `https://podcast-api.netlify.app/`.
+2. Response is stored in `cards` state.
+3. Derived state is computed with `useMemo`:
+- formatted update date
+- sort results
+- search-filtered results
+- visible card slice for pagination
+- carousel slide data
+4. Each rendered card passes show data to `Dialogs`.
+5. `Dialogs` fetches full show details from `https://podcast-api.netlify.app/id/{cardid}`.
+6. `Season` reads season data and renders episode list + audio player.
 
-4)After filling out the required information, you'll need to submit the form.
+## 6. Component Reference (Main Components + Props)
+### `src/main.jsx`
+- Purpose: App bootstrap.
+- Props: none.
 
-5)Once the form is submitted, you will receive a confirmation email to the provided email address.
+### `src/App.jsx`
+- Purpose: Routing and auth gate via session token.
+- Props: none.
 
-6)Check your email inbox for the confirmation message and follow the instructions to confirm your account.
+### `src/Components/home.jsx`
+- Purpose: Home layout wrapper for navbar + card screen.
+- Props: none.
 
-7)Once your account is confirmed, you'll be able to log in using the registered email and password.
+### `src/Components/card.jsx` (`CardSetUp`)
+- Purpose: Fetch/show podcasts, search/sort, carousel, load more, trigger show dialogs.
+- Props: none.
+- Important internal state:
+- `cards`, `isLoading`, `sortingOption`, `searchQuery`, `visibleCardsCount`
 
-# Podcast App Readme
+### `src/Components/dialog.jsx` (`Dialogs`)
+- Purpose: Show details modal and season selector entry point.
+- Props:
+- `cardid: number` (required)
+- `cardimage: string` (required)
+- `cardtitle: string` (required)
+- `carddescription: string` (required)
+- `cardgenres: number[]` (required)
+- `cardupdated: string` (required)
+- `genreMap: object` (required by PropTypes; currently not used in component logic)
 
-### Data
+### `src/Components/Season.jsx` (`BasicSelect`)
+- Purpose: Select a season and open full-screen dialog with episode list + audio players.
+- Props:
+- `idSeasons: object` (expected to contain `seasons[]`; no PropTypes currently)
 
-The project revolves around three semantic units: EPISODE, SEASON, and SHOW. Additionally, there's a PREVIEW unit offering a summarized version of a SHOW. Data is accessible through fetch requests to two endpoints: 
-1. [Shows Endpoint](https://podcast-api.netlify.app/shows) - Returns an array of PREVIEW objects.
-2. [Individual Show Endpoint](https://podcast-api.netlify.app/id/<ID>) - Returns a single SHOW object with embedded SEASON and EPISODE objects.
+### `src/Components/Imagecarousel.jsx` (`ImageCarousel`)
+- Purpose: Cycles featured show images with next/back controls.
+- Props:
+- `slides: Array<{ image: string, label: string, id?: string|number }>`
 
-### Relationships
+### `src/Components/likebutton.jsx` (`LikeButton`)
+- Purpose: Toggle star icon in episode UI.
+- Props: none.
+- Note: This state is local per render and not persisted.
 
-The data has interdependencies, such as EPISODEs making up a SEASON, SEASONs forming a SHOW, and associations between SHOW and PREVIEW. Genre information is conveyed through GENRE IDs, with the mapping detailed in the "Genre Titles" section.
+### `src/Components/Login.jsx` (`LoginPage`)
+- Purpose: Login form and route transition to `/Home`.
+- Props:
+- `setToken: function` (required)
+- Current credential check:
+- username: `toufeeq`
+- password: `latais`
 
-### Genre Titles
+## 7. Setup & Run Locally
+### Prerequisites
+- Node.js and npm installed.
+- A Node version compatible with Vite 8 (`Needs verification` for exact version in your local environment).
 
-| ID  | Title                               |
-|----|-------------------------------------|
-| 1  | Personal Growth                     |
-| 2  | True Crime and Investigative Journalism |
-| 3  | History                             |
-| 4  | Comedy                              |
-| 5  | Entertainment                       |
-| 6  | Business                            |
-| 7  | Fiction                             |
-| 8  | News                                |
-| 9  | Kids and Family                     |
+### Steps
+1. Install dependencies:
+```bash
+npm install
+```
+2. Start development server:
+```bash
+npm run dev
+```
+3. Open the local URL shown by Vite (usually `http://localhost:5173`).
+4. Login using:
+- username: `toufeeq`
+- password: `latais`
 
-## User Stories
+### Useful scripts
+- `npm run dev` - start dev server
+- `npm run build` - create production build in `dist/`
+- `npm run preview` - preview production build locally
+- `npm run lint` - run ESLint
 
-### Project Setup and Deployment
-- ✅ Project is deployed to a custom Netlify URL.
+## 8. Build & Deploy (Netlify)
+### Local production build
+```bash
+npm run build
+npm run preview
+```
 
-### Responsive Design
-- ✅ All views display correctly on the smallest mobile device available, "iPhone SE," emulatable in Chrome Dev tools.
+### Netlify settings
+- Build command: `npm run build`
+- Publish directory: `dist`
 
-### Favicon and Metatag
-- ✅ Favicon information added correctly via [realfavicongenerator.net](https://realfavicongenerator.net/).
-- ✅ Metatag information created and added via [metatags.io](https://metatags.io/), with manual URL replacements for absolute Netlify values.
+### Routing note for Netlify
+Because this is a React SPA using client-side routing, direct refresh on nested routes (for example `/Home`) may need a redirect rule.
 
-### Data Fetching
-- ✅ All show data loaded via a fetch call from [Shows Endpoint](https://podcast-api.netlify.app/shows).
-- ✅ When viewing a specific show, data is loaded via fetch from the [Individual Show Endpoint](https://podcast-api.netlify.app/id/<ID>).
+If needed, add a `_redirects` file in `public/`:
+```text
+/* /index.html 200
+```
 
-### Loading States
-- ✅ Loading states implemented while initial data is being loaded.
-- ✅ Loading states implemented while new data is being loaded.
+`Needs verification`: your current Netlify site UI settings and whether a redirect rule is already configured there.
 
-### Show Details
-- ✅ User can view the details of a show broken down into seasons, sorted by number.
+## 9. Troubleshooting
+### Slow image loading (diagnosis + quick fixes)
+Diagnosis checklist:
+1. Open browser DevTools `Network` tab and reload.
+2. Check image file sizes and response times from `podcast-api.netlify.app`.
+3. Check number of API calls on first load.
 
-### Episode Interaction
-- ✅ User can listen to any episode in a season of a show.
-- ✅ User can see a view where only episodes for a specifically selected season are shown.
-- ✅ User can toggle between different seasons for the same show.
+Important current behavior:
+- `card.jsx` loads 12 cards initially and shows many remote images.
+- `dialog.jsx` fetches per-show details for each rendered card on mount, not only when the user clicks `Description`.
+- Loading more cards adds more detail fetches.
 
-### Browsing Features
-- ✅ User can see the name of all available shows on the platform.
-- ✅ User sees a preview image of shows when browsing.
-- ✅ User sees the number of seasons per show when browsing.
-- ✅ User sees a human-readable date for when a show was last updated.
-- ✅ User sees associated genres (as genre titles) when browsing.
+Quick fixes:
+1. Fetch show details only when `Description` is clicked (move fetch from mount effect into open handler).
+2. Reduce `INITIAL_VISIBLE_CARDS` and/or `FEATURED_CAROUSEL_SLIDES`.
+3. Keep `loading="lazy"` on card images (already present).
+4. Add lightweight skeleton placeholders while images load.
+5. Cache fetched show details in state keyed by `cardid` to avoid repeat network calls.
 
-### Season Details
-- ✅ User sees a preview image of seasons for a specific show.
-- ✅ User sees the number of episodes in a season.
-- ✅ User can go back to a show view from a season-specific view.
+### Login fails
+- Ensure exact credentials are used:
+- username `toufeeq`
+- password `latais`
 
-### Favorites
-- ✅ User can mark specific episodes as favorites to find them again.
-- ✅ User can visit a view where they see all their favorites.
-- ✅ User can see the show and season of any episode in their favorites list.
-- ✅ Episodes related by season/show are grouped in favorites.
-- ✅ User is able to remove episodes from their favorites.
+### Blank or broken `/Home` on refresh in production
+- Add SPA redirect rule (`/* /index.html 200`) if missing.
 
-### Sorting and Filtering
-- ✅ User can arrange the list of shows by title from A-Z.
-- ✅ User can arrange the list of shows by title from Z-A.
-- ✅ User can arrange the list of shows by date updated in ascending order.
-- ✅ User can arrange the list of shows by date updated in descending order.
-- ✅ User can filter shows by title through a text input.
-- ✅ User can find shows based on fuzzy matching of strings.
+### Runtime error around seasons (`Cannot read properties of undefined`)
+- Likely from `idSeasons.seasons` being accessed before show details finish loading.
+- Quick fix: guard render in `Season.jsx` with checks like `if (!idSeasons?.seasons) return null;`.
 
-### Genre Interaction
-- ✅ Automatically filter shows by genre if the genre label is clicked on.
-
-### Timestamps and Progress
-- ✅ User sees the date and time that an episode was added to their favorites list.
-- ✅ User can arrange favorites by show titles from A-Z.
-- ✅ User can arrange favorites by show titles from Z-A.
-- ✅ User can arrange favorites by date updated in ascending order.
-- ✅ User can arrange favorites by date updated in descending order.
-- ✅ Audio player shows current progress and episode length as timestamps.
-- ✅ Audio player is always visible, allowing users to listen while browsing.
-- ✅ User is prompted to confirm closing the page when audio is playing.
-- ✅ App remembers the last show and episode the user listened to.
-- ✅ App remembers shows and episodes listened to all the way through.
-- ✅ App remembers the timestamp where the user stopped listening within a 10-second accuracy period of closing.
-- ✅ App remembers and shows the timestamp progress of any episode the user started listening to.
-- ✅ User can "reset" all their progress, effectively removing their listening history.
-
-### Additional Features
-- ✅ User is presented with a sliding carousel of possible shows on the landing page.
-- ✅ User can log in via [Supabase authentication](https://app.supabase.com).
-- ✅ User favorites are stored in the [Supabase database](https://app.supabase.com).
-- ✅ User favorites are automatically synced when logged in, ensuring they share favorites between devices.
-- ✅ Users can share their favorites as a publicly accessible URL.
-
-### PS
-- Not all user stories have been added yet and are still being worked on.
-
-
-
-
-
-
-
-
+## 10. Future Improvements
+1. Replace hardcoded login with secure authentication flow.
+2. Route and integrate `SignUpPage` or remove unused auth files if out of scope.
+3. Persist favorites (localStorage or backend) instead of UI-only state.
+4. Add error UI and retry buttons for failed fetches.
+5. Add tests (unit/component/integration) for card sorting, filtering, and dialogs.
+6. Add loading skeletons and request caching for better perceived performance.
+7. Introduce global state management only if feature complexity grows.
+8. Add accessibility improvements (focus management in dialogs, labels, keyboard paths).
